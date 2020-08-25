@@ -1,0 +1,44 @@
+service:
+  name: maintebot
+
+custom:
+  webpack:
+    webpackConfig: ./webpack.config.js
+    includeModules: true
+    forceExclude:
+      - aws-sdk
+
+plugins:
+  - serverless-webpack
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  profile: ${opt:profile, 'default'}
+  region: ${opt:region, 'ap-southeast-2'}
+  stage: ${opt:stage, 'prod'}
+  memory: 1024
+  timeout: 600
+  logRetentionInDays: 365
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - "ec2:CreateSnapshot"
+        - "ec2:DeleteSnapshot"
+        - "ec2:CreateTags"
+        - "ec2:ModifySnapshotAttribute"
+        - "ec2:ResetSnapshotAttribute"
+        - "ec2:Describe*"
+        - "logs:*"
+      Resource: "*"
+
+functions:
+  backup:
+    handler: src/handler/backup.handler
+    events:
+      - schedule: rate(1 day)
+
+  cleanup:
+    handler: src/handler/cleanup.handler
+    events:
+      - schedule: rate(1 day)

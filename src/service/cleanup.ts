@@ -2,10 +2,10 @@ import { EC2 } from 'aws-sdk';
 import { DescribeSnapshotsResult } from 'aws-sdk/clients/ec2';
 
 export class CleanupService {
-    
+
     private ec2: EC2 = new EC2();
     private today: Date = new Date();
-    
+
     /**
      * The worker method that makes the backup happen.
      * 
@@ -27,7 +27,7 @@ export class CleanupService {
                 if (!expires.hasOwnProperty('Value')) {
                     return;
                 }
-                
+
                 // The expiry date is in the future
                 if (new Date(expires.Value) > this.today) {
                     return;
@@ -36,10 +36,10 @@ export class CleanupService {
                 return this.ec2.deleteSnapshot({
                     SnapshotId: snapshot.SnapshotId
                 }).promise();
-            })); 
-        } while (nextToken);        
+            }));
+        } while (nextToken);
     }
-    
+
     /**
     * Loads all volumes in the current region with a "Backup" tag of value "daily" or "monthly"
     * 

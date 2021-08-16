@@ -178,8 +178,8 @@ export class BackupService {
                 Value: this.getBackupFrequency(volume)
             }
         ];
-        
-        if (tags[0].Value === BackupFrequency.Monthly && this.today.getDate() === 1 && this.today.getMonth() === 1) {
+
+        if (this.today.getDate() === 1 && this.today.getMonth() === 1) {
             // Do not add any expire date on images created on 1st January - we'll keep those forever.
         } else {
             // The Expires tag obviously carries the date after which the snapshot could be deleted

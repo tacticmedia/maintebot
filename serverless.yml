@@ -1,5 +1,4 @@
-service:
-  name: maintebot
+service: ${env:SERVICE_NAME, 'maintebot'}
 
 custom:
   webpack:
@@ -14,10 +13,10 @@ plugins:
 provider:
   name: aws
   runtime: nodejs12.x
-  profile: ${opt:profile, 'default'}
-  region: ${opt:region, 'ap-southeast-2'}
-  stage: ${opt:stage, 'prod'}
-  memory: 1024
+  profile: ${env:AWS_PROFILE, opt:aws-profile, 'default'}
+  region: ${env:AWS_REGION, opt:region, 'ap-southeast-2'}
+  stage: ${env:STAGE, opt:stage, 'dev'}
+  memorySize: 1024
   timeout: 600
   logRetentionInDays: 365
   iamRoleStatements:

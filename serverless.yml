@@ -41,3 +41,6 @@ functions:
     handler: src/handler/cleanup.handler
     events:
       - schedule: rate(1 day)
+
+resources:
+    Description: Automatic EBS volume snapshot manager. See https://github.com/tacticmedia/maintebot

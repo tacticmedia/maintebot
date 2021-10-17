@@ -23,10 +23,12 @@ The *daily* backups are kept for a month, *monthly* backups are kept for a year.
 ### First, deploy the code into AWS Lambda
 
 1. Check out this repository and open it in your terminal
+2. Copy `.env.dist` to `.env` and update settings to your liking
 2. Run `npm install`
-3. Run `STAGE=prod npx sls deploy`
+3. Run `npx sls deploy`
 
-Check out `.env` to see which environment variables are there for you to override. I'd suggest to add a dedicated environment you will be referring to in the future, with your own settings - just so that you don't have to type the env variables in all the time.
+Feel free to change anything in the `.env` file to your liking. You can also override any of the environment variables by specifying the variable
+name with the overriden value when you call Serverless, for example: `STAGE=prod npx sls deploy`
 
 See https://www.serverless.com/framework/docs/environment-variables/#support-for-env-files for more info about the SLS environment variables.
 ### Second, tag your EBS volumes
